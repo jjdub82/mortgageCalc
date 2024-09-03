@@ -103,3 +103,4 @@ schedule_df = pd.DataFrame(schedule, columns=["Month", "Payment", "Principal", "
 st.write("### Payment Schedule")
 payments_df = schedule_df[['Year', 'Remaining Balance']].groupby('Year').min()
 st.line_chart(payments_df)
+st.table(payments_df)
