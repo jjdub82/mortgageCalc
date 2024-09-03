@@ -61,6 +61,7 @@ mortgage_results = {
     'Downpayment Total': downPay_sum,
     'PMI': f"{pmi:,.2f}",
     'Insurance': f"${insurance:,.2f}",
+    'Propert Tax': f"${property_tax:,.2f}"
     'Total Payment': f"${total_pmt:,.2f}"
 }
 
