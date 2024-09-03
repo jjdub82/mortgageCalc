@@ -38,6 +38,8 @@ pmt = round(pmt, 2)
 property_tax = .0087 / 12
 insurance = round(2300 / 12, 2)
 pmi = round((.0046 * loan) / 12, 2)
+pmi_limit = home_price*.8
+
 
 
 if down_pct >= .2:
@@ -45,10 +47,10 @@ if down_pct >= .2:
     downstatus = "You are not paying PMI"
 else:
     total_pmt = round(pmt + property_tax + insurance + pmi, 2)
-    downstatus = f"You would be paying PMI, which would be about ${pmi}/month."
+    downstatus = f"You would be paying PMI, which would be about \\${pmi:,.2f} per month.  You can stop paying PMI after you have \\${pmi_limit:,.2f} remaining on the mortgage"
 
 total_paid = pmt*30*12
-total_interest = f"${total_paid - loan:,.2f}"
+total_interest = f"\${total_paid - loan:,.2f}"
 st.write(f"You can expect to pay somewhere around ${total_pmt}")
 st.write(downstatus)
 
@@ -75,9 +77,9 @@ def create_df():
 if st.button("Show Details"):
     create_df()
 
-st.write(f"# Your total monthly payment would be \${total_pmt} if you put \{downPay_sum} down and interest rates are at {interest_rate}%")
+st.write(f"# Your total monthly payment would be \\${total_pmt} if you put \{downPay_sum} down and interest rates are at {interest_rate}%")
 
-st.write(f"### In total you would spend \${total_paid:,.2f} on principal and interest through the life of the loan.  Of that amount, \{total_interest} would be spent on interest")
+st.write(f"### In total you would spend \\${total_paid:,.2f} on principal and interest through the life of the loan.  Of that amount, \{total_interest} would be spent on interest")
 
 schedule = []
 remaining_balance = loan
@@ -105,3 +107,4 @@ st.write("### Payment Schedule")
 payments_df = schedule_df[['Year', 'Remaining Balance']].groupby('Year').min()
 st.line_chart(payments_df)
 st.table(payments_df)
+st.table(schedule_df)
