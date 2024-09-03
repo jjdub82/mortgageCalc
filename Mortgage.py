@@ -79,7 +79,7 @@ if st.button("Show Details"):
 
 st.write(f"# Your total monthly payment would be \\${total_pmt} if you put \{downPay_sum} down and interest rates are at {interest_rate}%")
 
-st.write(f"### In total you would spend \\${total_paid:,.2f} on principal and interest through the life of the loan.  Of that amount, \{total_interest} would be spent on interest")
+st.write(f"### In total you would spend \\${total_paid:,.2f} on principal and interest through the life of the loan.  Of that amount, \\${total_interest} would be spent on interest")
 
 schedule = []
 remaining_balance = loan
