@@ -16,12 +16,13 @@ P = float(P)
 r = st.number_input("What are you expecting for a return rate?  (%)", min_value=0.0, value=7.0)
 r = float(r)
 sd = st.number_input("Enter a REASONABLE standard deviation percentage", step = 1.0, min_value=1.0, value= 15.0)
-compound_period = st.radio("Compound Frequency", options=['Monthly', 'Annually'] )
+compound_period = st.radio("Compound Frequency", options=['Annually'] )
 t = st.number_input("How Many Years are we looking at? ", min_value=0, value=30)
 t = int(t)
 additions = st.number_input("Do you plan to make an annual or monthly contribution?", step= 100.0, min_value=0.0, value=0.0)
 
 beat_return = st.number_input("What return output are you trying to beat?  ", step = 0.5, min_value = 1.0)
+beat_return = beat_return/100
 beat_dollar = st.number_input("Is there a dollar amount you ar trying to beat? ", step = 1000.0)
 
 def calculate_compound_interest(P, r, sd, t, additions):
@@ -88,7 +89,8 @@ if st.button("Calculate"):
     percentiles = [i/20 for i in range (1,20)]
 
     dollar_success = (sim_df['Amount'] >= beat_dollar).astype(int).mean()
-    st.write(f"You have a {dollar_success} \\% change of success")
+    return_success = (sim_df['Return'] >= beat_return).astype(int).mean() 
+    st.write(f"You have a {dollar_success} \\% change of success in beating your dollar target and a {return_success}\\% chance of beating your target return")
 
     probs = pd.DataFrame(sim_df['Amount'].quantile(percentiles))
 
