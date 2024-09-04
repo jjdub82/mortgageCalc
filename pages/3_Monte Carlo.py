@@ -90,6 +90,8 @@ if st.button("Calculate"):
 
     dollar_success = (sim_df['Amount'] >= beat_dollar).astype(int).mean()
     return_success = (sim_df['Return'] >= beat_return).astype(int).mean() 
+    dollar_success = round(dollar_success *100,2)
+    return_success = round(return_success*100,2)
     st.write(f"You have a {dollar_success} \\% change of success in beating your dollar target and a {return_success}\\% chance of beating your target return")
 
     probs = pd.DataFrame(sim_df['Amount'].quantile(percentiles))
