@@ -6,14 +6,14 @@ import matplotlib.pyplot as plt
 st.title("Compound Interest Calculator")
 
 # Inputs
-P = st.number_input("What is the initial Investment?  ", min_value=0.0, value=0.0)
+P = st.number_input("What is the initial Investment?  ", step= 1000.00, min_value=0.0, value=10000.0)
 P = float(P)
 r = st.number_input("What are you expecting for a return rate?  (%)", min_value=0.0, value=7.0) / 100
 r = float(r)
 compound_period = st.radio("Compound Frequency", options=['Monthly', 'Annually'])
 t = st.number_input("How Many Years are we looking at? ", min_value=0, value=30)
 t = int(t)
-additions = st.number_input("Do you plan to make an annual or monthly contribution?", min_value=0.0, value=0.0)
+additions = st.number_input("Do you plan to make an annual or monthly contribution?", step= 100.0, min_value=0.0, value=0.0)
 
 def calculate_compound_interest(P, r, n, t, additions):
     data = []
@@ -41,6 +41,18 @@ if st.button("Calculate"):
     df = pd.DataFrame(data)
 
     st.write(f"## Your investment will have grown to \${df.iloc[-1]['Amount']:,.2f} by end of all this")
+
+    df['YOY Growth'] = df["Amount"] - df['Amount'].shift(1)
+    df['% YOY Growth'] = round(df['YOY Growth']/df['Amount'].shift(1) ,2)
+    df['% YOY Growth'] = df['% YOY Growth'].apply(lambda x: f"{x *100:,.2f}%")
+
+    df['Cumulative Growth'] =  df['Amount'] - df.iloc[0]['Amount']
+    df['% Cumulative'] = round(df['Cumulative Growth']/df.iloc[0]['Amount'] ,2)
+    df['% Cumulative'] = df['% Cumulative'].apply(lambda x: f"{x * 100:.2f}%")
+
+
+   
+    
 
     # Display the DataFrame
     st.write("Compound Interest Growth Over Time:")

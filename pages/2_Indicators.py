@@ -21,7 +21,8 @@ hpi.columns = ['Home Price Index']
 
 existing_home_sales = fred.get_series('EXHOSLUSM495S', dt.date(2023,7,1))
 existing_df = pd.DataFrame(existing_home_sales)
-existing_df.columns = ["Homes Sold"]
+#existing_df.columns = ["Homes Sold"]
+existing_df.rename(columns={'0': 'Home Sales'})
 
 
 
